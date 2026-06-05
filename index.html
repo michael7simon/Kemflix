@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KEMFLIX</title>
+    <style>
+        /* Base Netflix Styling */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background-color: #111;
+            color: #fff;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Header / Nav */
+        header {
+            padding: 20px 4%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+            position: fixed;
+            width: 100%;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Curved SVG Logo Wrapper */
+        .logo-container {
+            width: 160px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Hero Billboard */
+        .billboard {
+            height: 85vh;
+            position: relative;
+            
+            /* ADJUST BACKGROUND HERE */
+            background-image: 
+                linear-gradient(to right, #111 25%, rgba(17, 17, 17, 0.6) 50%, rgba(17, 17, 17, 0) 100%),
+                linear-gradient(to top, #111 0%, rgba(17,17,17,0) 25%),
+                url('Mowni and Kevin.jpeg');
+            
+            /* CHANGE POSITION: 'right center' pushes the vertical photo to the right side */
+            background-position: right center; 
+            
+            /* ADJUST ZOOM: 'contain' stops it from cropping. You can also use percentages like '50%' or '70%' */
+            background-size: contain; 
+            
+            background-repeat: no-repeat;
+            display: flex;
+            align-items: center;
+            padding: 0 4%;
+        }
+        
+        .billboard-content {
+            max-width: 550px;
+            z-index: 2;
+            position: relative;
+        }
+        .billboard h1 {
+            font-size: 3.8rem;
+            margin-bottom: 12px;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+            font-weight: bold;
+        }
+        .billboard p {
+            font-size: 1.25rem;
+            line-height: 1.4;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
+            color: #e5e5e5;
+        }
+        .btn {
+            padding: 12px 28px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            font-size: 1.15rem;
+            font-weight: bold;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.2s, transform 0.1s;
+        }
+        .btn:hover {
+            background-color: rgba(255,255,255,0.75);
+        }
+
+        /* Video Rows */
+        .row {
+            padding: 20px 4%;
+            position: relative;
+            z-index: 3;
+            background-color: #111;
+        }
+        .row h2 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #e5e5e5;
+        }
+        .row-inner {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 15px 0;
+        }
+        .row-inner::-webkit-scrollbar {
+            display: none;
+        }
+        
+        /* Cards */
+        .tile {
+            min-width: 280px;
+            height: 158px;
+            background-color: #222;
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .tile:hover {
+            transform: scale(1.12);
+            z-index: 5;
+        }
+        .tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .tile-title {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+            padding: 15px 10px 10px 10px;
+            font-size: 0.95rem;
+            font-weight: bold;
+        }
+
+        /* Video Popup Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            z-index: 100;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            width: 85%;
+            max-width: 900px;
+            position: relative;
+            aspect-ratio: 16/9;
+            background: #000;
+            border-radius: 6px;
+            overflow: hidden;
+        }
+        .modal video {
+            width: 100%;
+            height: 100%;
+        }
+        .close-modal {
+            position: absolute;
+            top: -45px;
+            right: 0;
+            color: #fff;
+            font-size: 2.5rem;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Brand Line with Curved SVG Logo -->
+    <header>
+        <div class="logo-container">
+            <svg viewBox="0 0 300 100" width="100%" height="100%">
+                <defs>
+                    <!-- Define the invisible curved path for the text to follow -->
+                    <path id="textArc" d="M 10,70 Q 150,110 290,70" fill="transparent"/>
+                </defs>
+                <!-- Render text along the path with Netflix red color and bold impact styling -->
+                <text font-family="'Impact', 'Arial Black', sans-serif" font-size="54" font-weight="900" fill="#E50914" letter-spacing="2">
+                    <textPath href="#textArc" startOffset="50%" text-anchor="middle">KEMFLIX</textPath>
+                </text>
+            </svg>
+        </div>
+    </header>
+
+    <!-- Main Billboard Feature -->
+    <section class="billboard">
+        <div class="billboard-content">
+            <h1>The Perfect Match</h1>
+            <p>A beautiful journey of love, laughter, and happily ever after. Streaming exclusively in our hearts.</p>
+            <button class="btn" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><span>►</span> Play Trailer</button>
+        </div>
+    </section>
+
+    <!-- Video Row Content -->
+    <section class="row">
+        <h2>Trending Now: The Wedding Chronicles</h2>
+        <div class="row-inner">
+            
+            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
+                <img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=400" alt="Thumbnail">
+                <div class="tile-title">Ep 1: The Pre-Wedding Chaos</div>
+            </div>
+            
+            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
+                <img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400" alt="Thumbnail">
+                <div class="tile-title">Ep 2: The Sangeet Dance-Off</div>
+            </div>
+            
+            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
+                <img src="https://images.unsplash.com/photo-1519225495810-7512c696505a?q=80&w=400" alt="Thumbnail">
+                <div class="tile-title">Ep 3: The Grand Entrance</div>
+            </div>
+            
+            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
+                <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400" alt="Thumbnail">
+                <div class="tile-title">Ep 4: Haldi Ceremonies</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Video Player Popup Modal -->
+    <div class="modal" id="videoModal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closePlayer()">&times;</button>
+            <video id="mainPlayer" controls autoplay></video>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById('videoModal');
+        const player = document.getElementById('mainPlayer');
+
+        function openPlayer(videoUrl) {
+            player.src = videoUrl;
+            modal.style.display = 'flex';
+            player.play();
+        }
+
+        function closePlayer() {
+            modal.style.display = 'none';
+            player.pause();
+            player.src = "";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                closePlayer();
+            }
+        }
+    </script>
+
+</body>
+</html>
