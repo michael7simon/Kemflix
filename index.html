@@ -29,31 +29,24 @@
             align-items: center;
         }
         
-        /* Curved SVG Logo Wrapper */
+        /* Fixed, Integrated Curved Logo */
         .logo-container {
-            width: 160px;
+            width: 140px;
             height: 45px;
             display: flex;
             align-items: center;
         }
 
-        /* Hero Billboard */
+        /* Hero Billboard (Default Desktop Design) */
         .billboard {
             height: 85vh;
             position: relative;
-            
-            /* ADJUST BACKGROUND HERE */
             background-image: 
-                linear-gradient(to right, #111 25%, rgba(17, 17, 17, 0.6) 50%, rgba(17, 17, 17, 0) 100%),
-                linear-gradient(to top, #111 0%, rgba(17,17,17,0) 25%),
+                linear-gradient(to right, #111 30%, rgba(17, 17, 17, 0.5) 60%, rgba(17, 17, 17, 0) 100%),
+                linear-gradient(to top, #111 0%, rgba(17,17,17,0) 20%),
                 url('Mowni and Kevin.jpeg');
-            
-            /* CHANGE POSITION: 'right center' pushes the vertical photo to the right side */
             background-position: right center; 
-            
-            /* ADJUST ZOOM: 'contain' stops it from cropping. You can also use percentages like '50%' or '70%' */
             background-size: contain; 
-            
             background-repeat: no-repeat;
             display: flex;
             align-items: center;
@@ -90,7 +83,7 @@
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: background 0.2s, transform 0.1s;
+            transition: background 0.2s;
         }
         .btn:hover {
             background-color: rgba(255,255,255,0.75);
@@ -113,6 +106,7 @@
             gap: 12px;
             overflow-x: auto;
             padding: 15px 0;
+            -webkit-overflow-scrolling: touch; /* Smooth swiping on iOS */
         }
         .row-inner::-webkit-scrollbar {
             display: none;
@@ -183,27 +177,103 @@
             background: none;
             border: none;
         }
+
+        /* =========================================================
+           CRITICAL MOBILE SMARTPHONE RE-DESIGN RULES
+           ========================================================= */
+        @media (max-width: 768px) {
+            header {
+                justify-content: center; /* Centers the logo on mobile */
+                padding: 15px 0;
+            }
+            .logo-container {
+                width: 120px;
+            }
+            
+            .billboard {
+                height: 90vh;
+                flex-direction: column;
+                justify-content: flex-end; /* Pushes content down below the photo */
+                padding: 0 5% 40px 5%;
+                
+                /* Completely restructures photo rendering for narrow phone displays */
+                background-image: 
+                    linear-gradient(to top, #111 25%, rgba(17, 17, 17, 0.4) 60%, rgba(17,17,17,0) 100%),
+                    url('Mowni and Kevin.jpeg');
+                background-position: center 15%; /* Keeps their faces centered near the top */
+                background-size: cover; /* Forces photo to fill full width seamlessly */
+            }
+
+            .billboard-content {
+                max-width: 100%;
+                text-align: center; /* Centers movie style texts on phone layouts */
+            }
+
+            .billboard h1 {
+                font-size: 2.4rem;
+                margin-bottom: 8px;
+            }
+
+            .billboard p {
+                font-size: 1rem;
+                margin-bottom: 20px;
+            }
+
+            .btn {
+                padding: 10px 24px;
+                font-size: 1rem;
+                width: 100%; /* Full width button makes it much easier to tap on phones */
+                justify-content: center;
+            }
+
+            .row {
+                padding: 25px 4% 10px 4%;
+            }
+
+            .row h2 {
+                font-size: 1.1rem;
+                margin-bottom: 10px;
+            }
+
+            .tile {
+                min-width: 200px; /* Scales down thumbnails so 2 display on mobile trackpad views */
+                height: 113px;
+            }
+
+            .tile-title {
+                font-size: 0.8rem;
+                padding: 8px;
+            }
+            
+            .modal-content {
+                width: 95%; /* Maximizes space for mobile video player screens */
+            }
+            .close-modal {
+                top: -35px;
+                font-size: 2rem;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header Brand Line with Curved SVG Logo -->
     <header>
         <div class="logo-container">
-            <svg viewBox="0 0 300 100" width="100%" height="100%">
-                <defs>
-                    <!-- Define the invisible curved path for the text to follow -->
-                    <path id="textArc" d="M 10,70 Q 150,110 290,70" fill="transparent"/>
-                </defs>
-                <!-- Render text along the path with Netflix red color and bold impact styling -->
-                <text font-family="'Impact', 'Arial Black', sans-serif" font-size="54" font-weight="900" fill="#E50914" letter-spacing="2">
-                    <textPath href="#textArc" startOffset="50%" text-anchor="middle">KEMFLIX</textPath>
-                </text>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 140" width="100%" height="100%">
+                <g fill="#E50914">
+                    <path d="M40 10h22v47l36-47h26L84 62l43 64h-25L62 76v50H40V10z"/>
+                    <path d="M142 10h56v20h-34v27h30v19h-30v29h35v21h-57V10z"/>
+                    <path d="M214 10h26l21 61 21-61h25v116h-21V48l-20 57h-11l-20-57v78h-21V10z"/>
+                    <path d="M322 10h52v20h-30v29h27v19h-27v48h-22V10z"/>
+                    <path d="M390 10h22v96h32v20h-54V10z"/>
+                    <path d="M460 10h22v116h-22V10z"/>
+                    <path d="M496 10h24l26 53 26-53h24L560 67l38 59h-25l-27-46-27 46h-24l37-59-37-58z"/>
+                </g>
+                <path d="M 0 140 Q 300 112 600 140 Z" fill="#111111"/>
             </svg>
         </div>
     </header>
 
-    <!-- Main Billboard Feature -->
     <section class="billboard">
         <div class="billboard-content">
             <h1>The Perfect Match</h1>
@@ -212,7 +282,6 @@
         </div>
     </section>
 
-    <!-- Video Row Content -->
     <section class="row">
         <h2>Trending Now: The Wedding Chronicles</h2>
         <div class="row-inner">
@@ -240,11 +309,10 @@
         </div>
     </section>
 
-    <!-- Video Player Popup Modal -->
     <div class="modal" id="videoModal">
         <div class="modal-content">
             <button class="close-modal" onclick="closePlayer()">&times;</button>
-            <video id="mainPlayer" controls autoplay></video>
+            <video id="mainPlayer" controls autoplay playsinline></video>
         </div>
     </div>
 
