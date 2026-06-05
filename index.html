@@ -29,7 +29,7 @@
             align-items: center;
         }
         
-        /* Fixed, Integrated Curved Logo */
+        /* Fixed, Integrated Curved Logo Asset */
         .logo-container {
             width: 140px;
             height: 45px;
@@ -106,7 +106,7 @@
             gap: 12px;
             overflow-x: auto;
             padding: 15px 0;
-            -webkit-overflow-scrolling: touch; /* Smooth swiping on iOS */
+            -webkit-overflow-scrolling: touch;
         }
         .row-inner::-webkit-scrollbar {
             display: none;
@@ -179,55 +179,60 @@
         }
 
         /* =========================================================
-           CRITICAL MOBILE SMARTPHONE RE-DESIGN RULES
+           UPDATED MOBILE RESPONSIVE ENGINE RULES
            ========================================================= */
         @media (max-width: 768px) {
             header {
-                justify-content: center; /* Centers the logo on mobile */
-                padding: 15px 0;
+                justify-content: flex-start; /* Forces the logo to stick to the LEFT side on mobile */
+                padding: 15px 4%;
             }
             .logo-container {
-                width: 120px;
+                width: 110px;
+                height: 35px;
             }
             
             .billboard {
-                height: 90vh;
+                height: 80vh;
                 flex-direction: column;
-                justify-content: flex-end; /* Pushes content down below the photo */
-                padding: 0 5% 40px 5%;
+                justify-content: flex-end; 
+                padding: 0 5% 30px 5%;
                 
-                /* Completely restructures photo rendering for narrow phone displays */
+                /* Precision mobile background alignment and framing */
                 background-image: 
-                    linear-gradient(to top, #111 25%, rgba(17, 17, 17, 0.4) 60%, rgba(17,17,17,0) 100%),
+                    linear-gradient(to top, #111 30%, rgba(17, 17, 17, 0.3) 60%, rgba(17,17,17,0) 100%),
                     url('Mowni and Kevin.jpeg');
-                background-position: center 15%; /* Keeps their faces centered near the top */
-                background-size: cover; /* Forces photo to fill full width seamlessly */
+                
+                /* Nudges the photo framing down and right so their faces are beautifully preserved */
+                background-position: 62% 20%; 
+                
+                /* Perfectly scales down the wide landscape image layout to breathe on mobile views */
+                background-size: 160%; 
             }
 
             .billboard-content {
                 max-width: 100%;
-                text-align: center; /* Centers movie style texts on phone layouts */
+                text-align: center; 
             }
 
             .billboard h1 {
-                font-size: 2.4rem;
+                font-size: 2.2rem;
                 margin-bottom: 8px;
             }
 
             .billboard p {
-                font-size: 1rem;
+                font-size: 0.95rem;
                 margin-bottom: 20px;
             }
 
             .btn {
                 padding: 10px 24px;
                 font-size: 1rem;
-                width: 100%; /* Full width button makes it much easier to tap on phones */
+                width: 100%; 
                 justify-content: center;
             }
 
             .row {
-                padding: 25px 4% 10px 4%;
+                padding: 20px 4% 10px 4%;
             }
 
             .row h2 {
@@ -236,17 +241,17 @@
             }
 
             .tile {
-                min-width: 200px; /* Scales down thumbnails so 2 display on mobile trackpad views */
-                height: 113px;
+                min-width: 180px; 
+                height: 102px;
             }
 
             .tile-title {
-                font-size: 0.8rem;
-                padding: 8px;
+                font-size: 0.75rem;
+                padding: 6px;
             }
             
             .modal-content {
-                width: 95%; /* Maximizes space for mobile video player screens */
+                width: 95%; 
             }
             .close-modal {
                 top: -35px;
