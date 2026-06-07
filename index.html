@@ -179,7 +179,6 @@
             font-weight: bold;
         }
         
-        /* Progress Lines (------) Indicator Layout */
         .slider-progress {
             display: flex;
             gap: 4px;
@@ -200,7 +199,6 @@
             background-color: #aaa;
         }
 
-        /* Outer slider wrapping track window */
         .slider-wrapper {
             position: relative;
             overflow: hidden;
@@ -218,7 +216,6 @@
             display: none;
         }
         
-        /* Cinematic Slider Arrow Controller Triggers (< and >) */
         .slider-arrow {
             position: absolute;
             top: 10px;
@@ -284,27 +281,38 @@
 
         .badge, .top10-badge { display: none; }
 
-        /* Video Popup Modal */
+        /* MULTI-MODAL DISPLAY SYSTEM */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            z-index: 100;
+            background-color: rgba(0,0,0,0.92);
+            z-index: 500;
             justify-content: center;
             align-items: center;
         }
         .modal-content {
-            width: 85%;
-            max-width: 900px;
             position: relative;
-            aspect-ratio: 16/9;
             background: #000;
             border-radius: 6px;
             overflow: hidden;
         }
+        /* Sizing structure for the Video Frame Modal */
+        .modal-content.video-layout {
+            width: 85%;
+            max-width: 900px;
+            aspect-ratio: 16/9;
+        }
+        /* Sizing structure for the Image Poster Modal */
+        .modal-content.image-layout {
+            height: 85vh;
+            width: auto;
+            background: transparent;
+        }
         .modal video { width: 100%; height: 100%; }
+        .modal img { height: 100%; width: auto; object-fit: contain; }
+        
         .close-modal {
             position: absolute;
             top: -45px;
@@ -344,7 +352,7 @@
             
             .row { padding: 15px 0 15px 4%; }
             .row h2 { font-size: 1.15rem; }
-            .slider-progress, .slider-arrow { display: none !important; } /* Native swipe on mobile touch tracks */
+            .slider-progress, .slider-arrow { display: none !important; }
             
             .tile {
                 min-width: 115px;
@@ -370,8 +378,10 @@
                 background: #e50914; color: #fff; font-size: 0.5rem; font-weight: 900;
                 padding: 2px 4px; border-radius: 3px; text-transform: uppercase; z-index: 2;
             }
-            .modal-content { width: 95%; }
-            .close-modal { top: -35px; font-size: 2rem; }
+            
+            .modal-content.video-layout { width: 95%; height: auto; }
+            .modal-content.image-layout { height: 70vh; width: 85vw; }
+            .close-modal { top: -40px; right: 5px; font-size: 2.2rem; }
         }
     </style>
 </head>
@@ -419,7 +429,7 @@
         <div class="billboard-content">
             <h1>The Perfect Match</h1>
             <p>A beautiful journey of love, laughter, and happily ever after. Streaming exclusively in our hearts.</p>
-            <button class="btn" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><span>►</span> Play Trailer</button>
+            <button class="btn" onclick="openVideoPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><span>►</span> Play Trailer</button>
         </div>
     </section>
 
@@ -431,14 +441,49 @@
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollRow('row1-inner', -1)">&lt;</button>
             <div class="row-inner" id="row1-inner">
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=400"><div class="tile-title">Where Are My Keys?</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1543536448-d209d2d13a1c?q=80&w=400"><div class="tile-title">When Kevin Is 5 Mins Late</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=400"><div class="tile-title">The Diet Starts Tomorrow</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=400"><div class="tile-title">The Sangeet Meltdown</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=400"><div class="tile-title">Batch 2: Poster 5</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400"><div class="tile-title">Batch 2: Poster 6</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1519225495810-7512c696505a?q=80&w=400"><div class="tile-title">Batch 2: Poster 7</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400"><div class="tile-title">Batch 2: Poster 8</div></div>
+                
+                <div class="tile" onclick="openImagePopup('posters/1.jpg')">
+                    <img src="posters/1.jpg" alt="Poster 1">
+                    <span class="badge">New Season</span>
+                    <div class="tile-title">Where Are My Keys?</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('posters/4.jpg')">
+                    <img src="posters/4.jpg" alt="Poster 2">
+                    <div class="tile-title">When Kevin Is 5 Mins Late</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('posters/10.jpg')">
+                    <img src="posters/10.jpg" alt="Poster 3">
+                    <div class="tile-title">The Diet Starts Tomorrow</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('posters/11.jpg')">
+                    <img src="posters/11.jpg" alt="Poster 4">
+                    <div class="tile-title">The Sangeet Meltdown</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('posters/12.jpg')">
+                    <img src="posters/12.jpg" alt="Poster 5">
+                    <div class="tile-title">The Midnight Snack Raid</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('posters/13.jpg')">
+                    <img src="posters/13.jpg" alt="Poster 6">
+                    <div class="tile-title">Expert Level Overthinking</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('posters/14.jpg')">
+                    <img src="posters/14.jpg" alt="Poster 7">
+                    <div class="tile-title">The Lamborghini Hijack</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('posters/15.jpg')">
+                    <img src="posters/15.jpg" alt="Poster 8">
+                    <span class="badge">Trending</span>
+                    <div class="tile-title">Parallel Parking Survival</div>
+                </div>
+
             </div>
             <button class="slider-arrow right" onclick="scrollRow('row1-inner', 1)">&gt;</button>
         </div>
@@ -452,11 +497,11 @@
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollRow('row2-inner', -1)">&lt;</button>
             <div class="row-inner" id="row2-inner">
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400"><div class="tile-title">The Midnight Snack Raid</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=400"><div class="tile-title">Expert Level Overthinking</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=400"><div class="tile-title">Who Finished the Ice Cream?</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=400"><div class="tile-title">Batch 2: Title 4</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=400"><div class="tile-title">Batch 2: Title 5</div></div>
+                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="posters/16.jpg"><div class="tile-title">The Midnight Snack Raid</div></div>
+                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="posters/17.jpg"><div class="tile-title">Expert Level Overthinking</div></div>
+                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="posters/18.jpg"><div class="tile-title">Who Finished the Ice Cream?</div></div>
+                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="posters/19.jpg"><div class="tile-title">Batch 2: Title 4</div></div>
+                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="posters/20.jpg"><div class="tile-title">Batch 2: Title 5</div></div>
             </div>
             <button class="slider-arrow right" onclick="scrollRow('row2-inner', 1)">&gt;</button>
         </div>
@@ -470,26 +515,29 @@
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollRow('row3-inner', -1)">&lt;</button>
             <div class="row-inner" id="row3-inner">
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=400"><div class="tile-title">The Instagram Vs Reality Tale</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=400"><div class="tile-title">The Lamborghini Hijack</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=400"><div class="tile-title">Parallel Parking Survival</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400"><div class="tile-title">Batch 2: Title 4</div></div>
-                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1519225495810-7512c696505a?q=80&w=400"><div class="tile-title">Batch 2: Title 5</div></div>
+                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="posters/21.jpg"><div class="tile-title">The Instagram Vs Reality Tale</div></div>
+                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="posters/22.jpg"><div class="tile-title">The Lamborghini Hijack</div></div>
+                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="posters/23.jpg"><div class="tile-title">Parallel Parking Survival</div></div>
+                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="posters/24.jpg"><div class="tile-title">Batch 2: Title 4</div></div>
+                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="posters/25.jpg"><div class="tile-title">Batch 2: Title 5</div></div>
             </div>
             <button class="slider-arrow right" onclick="scrollRow('row3-inner', 1)">&gt;</button>
         </div>
     </section>
 
-    <div class="modal" id="videoModal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closePlayer()">&times;</button>
-            <video id="mainPlayer" controls autoplay playsinline></video>
+    <div class="modal" id="globalModal">
+        <div class="modal-content" id="modalContentWindow">
+            <button class="close-modal" onclick="closeGlobalModal()">&times;</button>
+            <video id="modalVideoComponent" controls autoplay playsinline style="display: none;"></video>
+            <img id="modalImageComponent" src="" alt="Poster View" style="display: none;">
         </div>
     </div>
 
     <script>
-        const modal = document.getElementById('videoModal');
-        const player = document.getElementById('mainPlayer');
+        const modal = document.getElementById('globalModal');
+        const modalContent = document.getElementById('modalContentWindow');
+        const videoElement = document.getElementById('modalVideoComponent');
+        const imageElement = document.getElementById('modalImageComponent');
         const header = document.getElementById('mainHeader');
 
         window.addEventListener('scroll', () => {
@@ -500,15 +548,11 @@
             }
         });
 
-        // INTEGRATED INTELLIGENT SLIDER ENGINE
         function scrollRow(rowId, direction) {
             const container = document.getElementById(rowId);
-            const scrollAmount = container.clientWidth * 0.85; // Moves exactly 85% of screen view width per click
-            container.scrollBy({
-                left: scrollAmount * direction,
-                behavior: 'smooth'
-            });
-            setTimeout(() => updateProgressLines(rowId), 600); // Calculates accurate sync alignment after smooth execution completes
+            const scrollAmount = container.clientWidth * 0.85; 
+            container.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+            setTimeout(() => updateProgressLines(rowId), 600);
         }
 
         function updateProgressLines(rowId) {
@@ -532,30 +576,52 @@
             }
         }
 
-        // Initialize progress line counts across global row segments upon window layout build completion
         window.addEventListener('load', () => {
             ['row1-inner', 'row2-inner', 'row3-inner'].forEach(id => {
                 updateProgressLines(id);
-                // Also update on manual window resize events dynamically
                 document.getElementById(id).addEventListener('scroll', () => updateProgressLines(id));
             });
         });
 
-        function openPlayer(videoUrl) {
-            player.src = videoUrl;
+        // ROW 1 PIPELINE: IMAGE POSTER LIGHTBOX VIEW
+        function openImagePopup(imagePath) {
+            // Clean older states
+            videoElement.style.display = "none";
+            videoElement.src = "";
+            
+            // Format layout window for portrait posters
+            modalContent.className = "modal-content image-layout";
+            imageElement.src = imagePath;
+            imageElement.style.display = "block";
             modal.style.display = 'flex';
-            player.play();
         }
 
-        function closePlayer() {
+        // ROW 2 & 3 PIPELINE: STREAMING VIDEO SECTIONS
+        function openVideoPlayer(videoUrl) {
+            // Clean older states
+            imageElement.style.display = "none";
+            imageElement.src = "";
+            
+            // Format layout window for landscape wide streaming formats
+            modalContent.className = "modal-content video-layout";
+            videoElement.src = videoUrl;
+            videoElement.style.display = "block";
+            modal.style.display = 'flex';
+            videoElement.play();
+        }
+
+        function closeGlobalModal() {
             modal.style.display = 'none';
-            player.pause();
-            player.src = "";
+            videoElement.pause();
+            videoElement.src = "";
+            imageElement.src = "";
+            videoElement.style.display = "none";
+            imageElement.style.display = "none";
         }
 
         window.onclick = function(event) {
             if (event.target == modal) {
-                closePlayer();
+                closeGlobalModal();
             }
         }
     </script>
