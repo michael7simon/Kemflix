@@ -34,14 +34,12 @@
             transition: background-color 0.3s ease;
         }
         
-        /* Left Section: Logo + Navigation Links */
         .nav-left {
             display: flex;
             align-items: center;
             gap: 25px;
         }
 
-        /* Perfected Logo Container frame to support the updated layout geometry */
         .logo-container {
             width: 125px;
             height: 26px;
@@ -72,7 +70,6 @@
             cursor: default;
         }
 
-        /* Right Section: Interactive Icons & Profile */
         .nav-right {
             display: flex;
             align-items: center;
@@ -162,33 +159,100 @@
             background-color: rgba(255,255,255,0.75);
         }
 
-        /* Video Rows Base Layout */
+        /* DYNAMIC CAROUSEL SLIDER ENGINE STYLING */
         .row {
-            padding: 25px 4%;
+            padding: 20px 0 20px 4%;
             position: relative;
             z-index: 3;
             background-color: #111;
         }
+        .row-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 4%;
+            margin-bottom: 12px;
+        }
         .row h2 {
             font-size: 1.4rem;
-            margin-bottom: 12px;
             color: #e5e5e5;
             font-weight: bold;
         }
+        
+        /* Progress Lines (------) Indicator Layout */
+        .slider-progress {
+            display: flex;
+            gap: 4px;
+            list-style: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .row:hover .slider-progress {
+            opacity: 1;
+        }
+        .progress-tab {
+            width: 12px;
+            height: 2px;
+            background-color: #4d4d4d;
+            transition: background-color 0.3s;
+        }
+        .progress-tab.active {
+            background-color: #aaa;
+        }
+
+        /* Outer slider wrapping track window */
+        .slider-wrapper {
+            position: relative;
+            overflow: hidden;
+            padding: 10px 0;
+        }
+        
         .row-inner {
             display: flex;
             gap: 12px;
-            overflow-x: auto;
-            padding: 10px 0;
-            -webkit-overflow-scrolling: touch;
+            overflow-x: scroll;
+            scroll-behavior: smooth;
+            padding-right: 4%;
         }
         .row-inner::-webkit-scrollbar {
             display: none;
         }
         
+        /* Cinematic Slider Arrow Controller Triggers (< and >) */
+        .slider-arrow {
+            position: absolute;
+            top: 10px;
+            bottom: 10px;
+            width: 4%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 2.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s, background-color 0.2s;
+            user-select: none;
+            border: none;
+        }
+        .slider-arrow.left { left: 0; border-radius: 0 4px 4px 0; }
+        .slider-arrow.right { right: 0; border-radius: 4px 0 0 4px; }
+        
+        .slider-wrapper:hover .slider-arrow {
+            opacity: 1;
+        }
+        .slider-arrow:hover {
+            background-color: rgba(0, 0, 0, 0.8);
+            font-size: 2.8rem;
+        }
+
         /* DESKTOP DEFAULT: Widescreen Horizontal Cards */
         .tile {
             min-width: 280px;
+            width: 280px;
             height: 158px;
             background-color: #222;
             border-radius: 4px;
@@ -196,6 +260,7 @@
             position: relative;
             cursor: pointer;
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            flex-shrink: 0;
         }
         .tile:hover {
             transform: scale(1.12);
@@ -217,10 +282,7 @@
             font-weight: bold;
         }
 
-        /* Hide badges on desktop view layouts */
-        .badge, .top10-badge {
-            display: none;
-        }
+        .badge, .top10-badge { display: none; }
 
         /* Video Popup Modal */
         .modal {
@@ -242,10 +304,7 @@
             border-radius: 6px;
             overflow: hidden;
         }
-        .modal video {
-            width: 100%;
-            height: 100%;
-        }
+        .modal video { width: 100%; height: 100%; }
         .close-modal {
             position: absolute;
             top: -45px;
@@ -261,24 +320,11 @@
            MOBILE SMARTPHONE RULES
            ========================================================= */
         @media (max-width: 768px) {
-            header {
-                height: 56px;
-                padding: 0 4%;
-            }
-            .logo-container {
-                width: 98px;
-                height: 20px;
-            }
-            .nav-menu {
-                display: none;
-            }
-            .nav-right {
-                gap: 15px;
-            }
-            .profile-avatar {
-                width: 28px;
-                height: 28px;
-            }
+            header { height: 56px; padding: 0 4%; }
+            .logo-container { width: 98px; height: 20px; }
+            .nav-menu { display: none; }
+            .nav-right { gap: 15px; }
+            .profile-avatar { width: 28px; height: 28px; }
             
             .billboard {
                 height: 75vh;
@@ -291,39 +337,22 @@
                 background-position: 62% 20%; 
                 background-size: 160%; 
             }
-            .billboard-content {
-                max-width: 100%;
-                text-align: center; 
-            }
-            .billboard h1 {
-                font-size: 2.2rem;
-                margin-bottom: 8px;
-            }
-            .billboard p {
-                font-size: 0.95rem;
-                margin-bottom: 20px;
-            }
-            .btn {
-                padding: 10px 24px;
-                font-size: 1rem;
-                width: 100%; 
-                justify-content: center;
-            }
-            .row h2 {
-                font-size: 1.15rem;
-                margin-bottom: 8px;
-            }
+            .billboard-content { max-width: 100%; text-align: center; }
+            .billboard h1 { font-size: 2.2rem; margin-bottom: 8px; }
+            .billboard p { font-size: 0.95rem; margin-bottom: 20px; }
+            .btn { padding: 10px 24px; font-size: 1rem; width: 100%; justify-content: center; }
             
-            /* TRANSFORMS CARDS TO PORTRAIT ONLY ON MOBILE */
+            .row { padding: 15px 0 15px 4%; }
+            .row h2 { font-size: 1.15rem; }
+            .slider-progress, .slider-arrow { display: none !important; } /* Native swipe on mobile touch tracks */
+            
             .tile {
                 min-width: 115px;
                 width: 115px;
                 height: 165px;
                 border-radius: 4px;
             }
-            .tile:hover {
-                transform: scale(1.08);
-            }
+            .tile:hover { transform: scale(1.08); }
             .tile-title {
                 font-size: 0.75rem;
                 padding: 10px 4px 4px 4px;
@@ -332,43 +361,17 @@
             }
 
             .badge {
-                display: block;
-                position: absolute;
-                bottom: 4px;
-                left: 50%;
-                transform: translateX(-50%);
-                background-color: #e50914;
-                color: white;
-                padding: 1px 4px;
-                font-size: 0.5rem;
-                font-weight: bold;
-                border-radius: 2px;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-                z-index: 2;
+                display: block; position: absolute; bottom: 4px; left: 50%; transform: translateX(-50%);
+                background-color: #e50914; color: white; padding: 1px 4px; font-size: 0.5rem;
+                font-weight: bold; border-radius: 2px; text-transform: uppercase; z-index: 2;
             }
             .top10-badge {
-                display: block;
-                position: absolute;
-                top: 5px;
-                right: 5px;
-                background: #e50914;
-                color: #fff;
-                font-size: 0.5rem;
-                font-weight: 900;
-                padding: 2px 4px;
-                border-radius: 3px;
-                text-transform: uppercase;
-                z-index: 2;
+                display: block; position: absolute; top: 5px; right: 5px;
+                background: #e50914; color: #fff; font-size: 0.5rem; font-weight: 900;
+                padding: 2px 4px; border-radius: 3px; text-transform: uppercase; z-index: 2;
             }
-            
-            .modal-content {
-                width: 95%; 
-            }
-            .close-modal {
-                top: -35px;
-                font-size: 2rem;
-            }
+            .modal-content { width: 95%; }
+            .close-modal { top: -35px; font-size: 2rem; }
         }
     </style>
 </head>
@@ -420,77 +423,60 @@
         </div>
     </section>
 
-    <section class="row">
-        <h2>Suspenseful TV Shows</h2>
-        <div class="row-inner">
-            
-            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
-                <img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=400" alt="Cover Image">
-                <span class="badge">New Season</span>
-                <div class="tile-title">Where Are My Keys?</div>
+    <section class="row" id="row1">
+        <div class="row-header">
+            <h2>Suspenseful TV Shows</h2>
+            <ul class="slider-progress" id="progress1"></ul>
+        </div>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollRow('row1-inner', -1)">&lt;</button>
+            <div class="row-inner" id="row1-inner">
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=400"><div class="tile-title">Where Are My Keys?</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1543536448-d209d2d13a1c?q=80&w=400"><div class="tile-title">When Kevin Is 5 Mins Late</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=400"><div class="tile-title">The Diet Starts Tomorrow</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=400"><div class="tile-title">The Sangeet Meltdown</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1465495976277-4387d4b0b4c6?q=80&w=400"><div class="tile-title">Batch 2: Poster 5</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400"><div class="tile-title">Batch 2: Poster 6</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1519225495810-7512c696505a?q=80&w=400"><div class="tile-title">Batch 2: Poster 7</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?q=80&w=400"><div class="tile-title">Batch 2: Poster 8</div></div>
             </div>
-
-            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
-                <img src="https://images.unsplash.com/photo-1543536448-d209d2d13a1c?q=80&w=400" alt="Cover Image">
-                <div class="tile-title">When Kevin Is 5 Mins Late</div>
-            </div>
-
-            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
-                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=400" alt="Cover Image">
-                <div class="tile-title">The Diet Starts Tomorrow</div>
-            </div>
-
-            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
-                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=400" alt="Cover Image">
-                <div class="tile-title">The Sangeet Meltdown</div>
-            </div>
-
+            <button class="slider-arrow right" onclick="scrollRow('row1-inner', 1)">&gt;</button>
         </div>
     </section>
 
-    <section class="row">
-        <h2>Binge-worthy TV Mysteries</h2>
-        <div class="row-inner">
-            
-            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
-                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400" alt="Cover Image">
-                <span class="top10-badge">Top 10</span>
-                <div class="tile-title">The Midnight Snack Raid</div>
+    <section class="row" id="row2">
+        <div class="row-header">
+            <h2>Binge-worthy TV Mysteries</h2>
+            <ul class="slider-progress" id="progress2"></ul>
+        </div>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollRow('row2-inner', -1)">&lt;</button>
+            <div class="row-inner" id="row2-inner">
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400"><div class="tile-title">The Midnight Snack Raid</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=400"><div class="tile-title">Expert Level Overthinking</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=400"><div class="tile-title">Who Finished the Ice Cream?</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=400"><div class="tile-title">Batch 2: Title 4</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=400"><div class="tile-title">Batch 2: Title 5</div></div>
             </div>
-
-            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
-                <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=400" alt="Cover Image">
-                <div class="tile-title">Expert Level Overthinking</div>
-            </div>
-
-            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
-                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=400" alt="Cover Image">
-                <div class="tile-title">Who Finished the Ice Cream?</div>
-            </div>
-
+            <button class="slider-arrow right" onclick="scrollRow('row2-inner', 1)">&gt;</button>
         </div>
     </section>
 
-    <section class="row">
-        <h2>Critically Acclaimed Docuseries</h2>
-        <div class="row-inner">
-            
-            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
-                <img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=400" alt="Cover Image">
-                <div class="tile-title">The Instagram Vs Reality Tale</div>
+    <section class="row" id="row3">
+        <div class="row-header">
+            <h2>Critically Acclaimed Docuseries</h2>
+            <ul class="slider-progress" id="progress3"></ul>
+        </div>
+        <div class="slider-wrapper">
+            <button class="slider-arrow left" onclick="scrollRow('row3-inner', -1)">&lt;</button>
+            <div class="row-inner" id="row3-inner">
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?q=80&w=400"><div class="tile-title">The Instagram Vs Reality Tale</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=400"><div class="tile-title">The Lamborghini Hijack</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=400"><div class="tile-title">Parallel Parking Survival</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?q=80&w=400"><div class="tile-title">Batch 2: Title 4</div></div>
+                <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="https://images.unsplash.com/photo-1519225495810-7512c696505a?q=80&w=400"><div class="tile-title">Batch 2: Title 5</div></div>
             </div>
-
-            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
-                <img src="https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?q=80&w=400" alt="Cover Image">
-                <div class="tile-title">The Lamborghini Hijack</div>
-            </div>
-
-            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
-                <img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=400" alt="Cover Image">
-                <span class="badge">Trending</span>
-                <div class="tile-title">Parallel Parking Survival</div>
-            </div>
-
+            <button class="slider-arrow right" onclick="scrollRow('row3-inner', 1)">&gt;</button>
         </div>
     </section>
 
@@ -512,6 +498,47 @@
             } else {
                 header.style.backgroundColor = 'transparent';
             }
+        });
+
+        // INTEGRATED INTELLIGENT SLIDER ENGINE
+        function scrollRow(rowId, direction) {
+            const container = document.getElementById(rowId);
+            const scrollAmount = container.clientWidth * 0.85; // Moves exactly 85% of screen view width per click
+            container.scrollBy({
+                left: scrollAmount * direction,
+                behavior: 'smooth'
+            });
+            setTimeout(() => updateProgressLines(rowId), 600); // Calculates accurate sync alignment after smooth execution completes
+        }
+
+        function updateProgressLines(rowId) {
+            const container = document.getElementById(rowId);
+            const progressId = rowId.replace('-inner', '').replace('row', 'progress');
+            const progressUl = document.getElementById(progressId);
+            if (!progressUl) return;
+
+            const maxScroll = container.scrollWidth - container.clientWidth;
+            if (maxScroll <= 0) return;
+
+            const totalBatches = Math.ceil(container.scrollWidth / container.clientWidth);
+            const currentScroll = container.scrollLeft;
+            const activeIndex = Math.min(Math.round((currentScroll / maxScroll) * (totalBatches - 1)), totalBatches - 1);
+
+            progressUl.innerHTML = '';
+            for (let i = 0; i < totalBatches; i++) {
+                const li = document.createElement('li');
+                li.className = `progress-tab ${i === activeIndex ? 'active' : ''}`;
+                progressUl.appendChild(li);
+            }
+        }
+
+        // Initialize progress line counts across global row segments upon window layout build completion
+        window.addEventListener('load', () => {
+            ['row1-inner', 'row2-inner', 'row3-inner'].forEach(id => {
+                updateProgressLines(id);
+                // Also update on manual window resize events dynamically
+                document.getElementById(id).addEventListener('scroll', () => updateProgressLines(id));
+            });
         });
 
         function openPlayer(videoUrl) {
