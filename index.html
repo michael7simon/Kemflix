@@ -36,7 +36,7 @@
             align-items: center;
         }
 
-        /* Hero Billboard Deskop Layout */
+        /* Hero Billboard Desktop Layout */
         .billboard {
             height: 75vh;
             position: relative;
@@ -103,7 +103,7 @@
         }
         .row-inner {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             overflow-x: auto;
             padding: 10px 0;
             -webkit-overflow-scrolling: touch;
@@ -112,69 +112,40 @@
             display: none;
         }
         
-        /* Netflix Classic Vertical Movie Poster Layout */
-        .poster-tile {
-            min-width: 170px;
-            width: 170px;
-            height: 250px;
+        /* DESKTOP DEFAULT: Widescreen Horizontal Cards (16:9 Aspect Ratio) */
+        .tile {
+            min-width: 280px;
+            height: 158px;
             background-color: #222;
-            border-radius: 6px;
+            border-radius: 4px;
             overflow: hidden;
             position: relative;
             cursor: pointer;
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
-        .poster-tile:hover {
-            transform: scale(1.08);
+        .tile:hover {
+            transform: scale(1.12);
             z-index: 5;
         }
-        .poster-tile img {
+        .tile img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
-        
-        /* Overlay text on poster cards */
-        .poster-title {
+        .tile-title {
             position: absolute;
             bottom: 0;
             left: 0;
             width: 100%;
-            background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
-            padding: 15px 8px 8px 8px;
-            font-size: 0.9rem;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 0%, transparent 100%);
+            padding: 15px 10px 10px 10px;
+            font-size: 0.95rem;
             font-weight: bold;
-            text-align: center;
-            line-height: 1.2;
         }
 
-        /* Netflix Tags & Badges */
-        .badge {
-            position: absolute;
-            bottom: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #e50914;
-            color: white;
-            padding: 2px 8px;
-            font-size: 0.65rem;
-            font-weight: bold;
-            border-radius: 2px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            z-index: 2;
-        }
-        .top10-badge {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: #e50914;
-            color: #fff;
-            font-size: 0.6rem;
-            font-weight: 900;
-            padding: 3px 5px;
-            border-radius: 3px;
-            text-transform: uppercase;
+        /* Hide badges on desktop view layouts */
+        .badge, .top10-badge {
+            display: none;
         }
 
         /* Video Popup Modal */
@@ -212,7 +183,9 @@
             border: none;
         }
 
-        /* Mobile Responsive System */
+        /* =========================================================
+           MOBILE SMARTPHONE RULES (Changes ONLY take effect on phone screens)
+           ========================================================= */
         @media (max-width: 768px) {
             header {
                 justify-content: flex-start;
@@ -255,25 +228,56 @@
                 font-size: 1.15rem;
                 margin-bottom: 8px;
             }
-            .poster-tile {
+            
+            /* TRANSFORMS CARDS TO PORTRAIT ONLY ON MOBILE (2:3 Aspect Ratio) */
+            .tile {
                 min-width: 115px;
                 width: 115px;
                 height: 165px;
                 border-radius: 4px;
             }
-            .poster-title {
+            .tile:hover {
+                transform: scale(1.08);
+            }
+            .tile-title {
                 font-size: 0.75rem;
                 padding: 10px 4px 4px 4px;
+                text-align: center;
+                background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
             }
+
+            /* Make Badges visible on mobile layouts */
             .badge {
+                display: block;
+                position: absolute;
+                bottom: 4px;
+                left: 50%;
+                transform: translateX(-50%);
+                background-color: #e50914;
+                color: white;
                 padding: 1px 4px;
                 font-size: 0.5rem;
-                bottom: 4px;
+                font-weight: bold;
+                border-radius: 2px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                z-index: 2;
             }
             .top10-badge {
+                display: block;
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                background: #e50914;
+                color: #fff;
                 font-size: 0.5rem;
+                font-weight: 900;
                 padding: 2px 4px;
+                border-radius: 3px;
+                text-transform: uppercase;
+                z-index: 2;
             }
+            
             .modal-content {
                 width: 95%; 
             }
@@ -315,25 +319,25 @@
         <h2>Suspenseful TV Shows</h2>
         <div class="row-inner">
             
-            <div class="poster-tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
-                <img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=300" alt="Movie Cover">
+            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
+                <img src="https://images.unsplash.com/photo-1509248961158-e54f6934749c?q=80&w=400" alt="Cover Image">
                 <span class="badge">New Season</span>
-                <div class="poster-title">Where Are My Keys?</div>
+                <div class="tile-title">Where Are My Keys?</div>
             </div>
 
-            <div class="poster-tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
-                <img src="https://images.unsplash.com/photo-1543536448-d209d2d13a1c?q=80&w=300" alt="Movie Cover">
-                <div class="poster-title">When Kevin Is 5 Mins Late</div>
+            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
+                <img src="https://images.unsplash.com/photo-1543536448-d209d2d13a1c?q=80&w=400" alt="Cover Image">
+                <div class="tile-title">When Kevin Is 5 Mins Late</div>
             </div>
 
-            <div class="poster-tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
-                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=300" alt="Movie Cover">
-                <div class="poster-title">The Diet Starts Tomorrow</div>
+            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
+                <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=400" alt="Cover Image">
+                <div class="tile-title">The Diet Starts Tomorrow</div>
             </div>
 
-            <div class="poster-tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
-                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=300" alt="Movie Cover">
-                <div class="poster-title">The Sangeet Meltdown</div>
+            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
+                <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=400" alt="Cover Image">
+                <div class="tile-title">The Sangeet Meltdown</div>
             </div>
 
         </div>
@@ -343,20 +347,20 @@
         <h2>Binge-worthy TV Mysteries</h2>
         <div class="row-inner">
             
-            <div class="poster-tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
-                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=300" alt="Movie Cover">
+            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
+                <img src="https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=400" alt="Cover Image">
                 <span class="top10-badge">Top 10</span>
-                <div class="poster-title">The Midnight Snack Raid</div>
+                <div class="tile-title">The Midnight Snack Raid</div>
             </div>
 
-            <div class="poster-tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
-                <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=300" alt="Movie Cover">
-                <div class="poster-title">Expert Level Overthinking</div>
+            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/mov_bbb.mp4')">
+                <img src="https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=400" alt="Cover Image">
+                <div class="tile-title">Expert Level Overthinking</div>
             </div>
 
-            <div class="poster-tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
-                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=300" alt="Movie Cover">
-                <div class="poster-title">Who Finished the Snacks?</div>
+            <div class="tile" onclick="openPlayer('https://www.w3schools.com/html/movie.mp4')">
+                <img src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?q=80&w=400" alt="Cover Image">
+                <div class="tile-title">Who Finished the Ice Cream?</div>
             </div>
 
         </div>
