@@ -18,27 +18,102 @@
             overflow-x: hidden;
         }
 
-        /* Header / Nav */
+        /* PREMIUM STICKY NAVIGATION BAR */
         header {
-            padding: 20px 4%;
-            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
+            padding: 0 4%;
+            height: 68px;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0.5) 60%, rgba(0,0,0,0) 100%);
             position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            z-index: 10;
+            z-index: 100;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: background-color 0.3s ease;
+        }
+        
+        /* Left Section: Logo + Navigation Links */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        /* Fully Restructured, Non-Overlapping Arched Logo Container */
+        .logo-container {
+            width: 110px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+        .nav-menu a {
+            color: #e5e5e5;
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.2s, font-weight 0.2s;
+            cursor: pointer;
+        }
+        .nav-menu a:hover {
+            color: #b3b3b3;
+        }
+        .nav-menu .active a {
+            color: #fff;
+            font-weight: bold;
+            cursor: default;
+        }
+
+        /* Right Section: Interactive Icons & Profile */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        .nav-icon {
+            cursor: pointer;
             display: flex;
             align-items: center;
         }
-        
-        .logo-container {
-            width: 140px;
-            height: 45px;
+        .nav-icon svg {
+            fill: #fff;
+            width: 20px;
+            height: 20px;
+            transition: transform 0.2s;
+        }
+        .nav-icon:hover svg {
+            transform: scale(1.05);
+        }
+        .profile-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 4px;
+            background: #1f80e0;
+            overflow: hidden;
+            cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        /* Custom mini minimalist vector avatar face inside the wrapper profile frame */
+        .profile-avatar svg {
+            width: 24px;
+            height: 24px;
+            fill: #fff;
         }
 
         /* Hero Billboard Desktop Layout */
         .billboard {
-            height: 75vh;
+            height: 90vh;
             position: relative;
             background-image: 
                 linear-gradient(to right, #111 30%, rgba(17, 17, 17, 0.5) 60%, rgba(17, 17, 17, 0) 100%),
@@ -49,7 +124,7 @@
             background-repeat: no-repeat;
             display: flex;
             align-items: center;
-            padding: 0 4%;
+            padding: 68px 4% 0 4%; /* Added top padding so header navbar never clips it */
         }
         
         .billboard-content {
@@ -90,7 +165,7 @@
 
         /* Video Rows Base Layout */
         .row {
-            padding: 15px 4%;
+            padding: 25px 4%;
             position: relative;
             z-index: 3;
             background-color: #111;
@@ -184,17 +259,29 @@
         }
 
         /* =========================================================
-           MOBILE SMARTPHONE RULES (Changes ONLY take effect on phone screens)
+           MOBILE SMARTPHONE RULES
            ========================================================= */
         @media (max-width: 768px) {
             header {
-                justify-content: flex-start;
-                padding: 15px 4%;
+                height: 56px;
+                padding: 0 4%;
             }
             .logo-container {
-                width: 110px;
-                height: 35px;
+                width: 90px;
+                height: 30px;
             }
+            /* Hide wide navigation link texts on tiny smartphone viewport columns to prevent crowding */
+            .nav-menu {
+                display: none;
+            }
+            .nav-right {
+                gap: 15px;
+            }
+            .profile-avatar {
+                width: 28px;
+                height: 28px;
+            }
+            
             .billboard {
                 height: 75vh;
                 flex-direction: column;
@@ -290,20 +377,41 @@
 </head>
 <body>
 
-    <header>
-        <div class="logo-container">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 140" width="100%" height="100%">
-                <g fill="#E50914">
-                    <path d="M40 10h22v47l36-47h26L84 62l43 64h-25L62 76v50H40V10z"/>
-                    <path d="M142 10h56v20h-34v27h30v19h-30v29h35v21h-57V10z"/>
-                    <path d="M214 10h26l21 61 21-61h25v116h-21V48l-20 57h-11l-20-57v78h-21V10z"/>
-                    <path d="M322 10h52v20h-30v29h27v19h-27v48h-22V10z"/>
-                    <path d="M390 10h22v96h32v20h-54V10z"/>
-                    <path d="M460 10h22v116h-22V10z"/>
-                    <path d="M496 10h24l26 53 26-53h24L560 67l38 59h-25l-27-46-27 46h-24l37-59-37-58z"/>
-                </g>
-                <path d="M 0 140 Q 300 112 600 140 Z" fill="#111111"/>
-            </svg>
+    <header id="mainHeader">
+        <div class="nav-left">
+            <div class="logo-container">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 150" width="100%" height="100%">
+                    <g fill="#E50914">
+                        <path d="M40 5h24v50l38-50h26L86 60l45 68h-26L64 75v53H40V5z"/>
+                        <path d="M146 5h58v22h-34v28h30v21h-30v30h36v22h-60V5z"/>
+                        <path d="M220 5h28l22 65 22-65h26v123h-22V45l-21 61h-12l-21-61v83h-22V5z"/>
+                        <path d="M332 5h54v22h-30v30h28v21h-28v50h-24V5z"/>
+                        <path d="M402 5h24v101h34v22h-58V5z"/>
+                        <path d="M474 5h24v123h-24V5z"/>
+                        <path d="M512 5h26l27 56 27-56h25l-39 72 40 51h-27l-29-41-29 41h-26l39-51-39-72z"/>
+                    </g>
+                    <path d="M 0 150 Q 300 116 600 150 Z" fill="#111111"/>
+                </svg>
+            </div>
+            <ul class="nav-menu">
+                <li class="active"><a>Home</a></li>
+                <li><a>Shows</a></li>
+                <li><a>Movies</a></li>
+                <li><a>New & Popular</a></li>
+                <li><a>My List</a></li>
+            </ul>
+        </div>
+        
+        <div class="nav-right">
+            <div class="nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+            </div>
+            <div class="nav-icon">
+                <svg viewBox="0 0 24 24"><path d="M12 22c1.1 0 2-.9 2-2h-4c0 1.1.89 2 2 2zm6-6v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-.83-.67-1-1.5-1s-1.5.17-1.5 1v.68C7.63 5.36 6 7.92 6 11v5l-2 2v1h16v-1l-2-2z"/></svg>
+            </div>
+            <div class="profile-avatar">
+                <svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+            </div>
         </div>
     </header>
 
@@ -399,6 +507,16 @@
     <script>
         const modal = document.getElementById('videoModal');
         const player = document.getElementById('mainPlayer');
+        const header = document.getElementById('mainHeader');
+
+        // Smooth background change script simulating real streaming service dark states when scrolling down
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                header.style.backgroundColor = '#111111';
+            } else {
+                header.style.backgroundColor = 'transparent';
+            }
+        });
 
         function openPlayer(videoUrl) {
             player.src = videoUrl;
