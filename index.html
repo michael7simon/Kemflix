@@ -41,10 +41,10 @@
             gap: 25px;
         }
 
-        /* Fully Restructured, Non-Overlapping Arched Logo Container */
+        /* Perfected Logo Container frame to support the updated layout geometry */
         .logo-container {
-            width: 110px;
-            height: 40px;
+            width: 125px;
+            height: 26px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -60,7 +60,7 @@
             color: #e5e5e5;
             text-decoration: none;
             font-size: 0.85rem;
-            transition: color 0.2s, font-weight 0.2s;
+            transition: color 0.2s;
             cursor: pointer;
         }
         .nav-menu a:hover {
@@ -104,7 +104,6 @@
             justify-content: center;
             border: 1px solid rgba(255,255,255,0.1);
         }
-        /* Custom mini minimalist vector avatar face inside the wrapper profile frame */
         .profile-avatar svg {
             width: 24px;
             height: 24px;
@@ -124,7 +123,7 @@
             background-repeat: no-repeat;
             display: flex;
             align-items: center;
-            padding: 68px 4% 0 4%; /* Added top padding so header navbar never clips it */
+            padding: 68px 4% 0 4%;
         }
         
         .billboard-content {
@@ -187,7 +186,7 @@
             display: none;
         }
         
-        /* DESKTOP DEFAULT: Widescreen Horizontal Cards (16:9 Aspect Ratio) */
+        /* DESKTOP DEFAULT: Widescreen Horizontal Cards */
         .tile {
             min-width: 280px;
             height: 158px;
@@ -267,10 +266,9 @@
                 padding: 0 4%;
             }
             .logo-container {
-                width: 90px;
-                height: 30px;
+                width: 98px;
+                height: 20px;
             }
-            /* Hide wide navigation link texts on tiny smartphone viewport columns to prevent crowding */
             .nav-menu {
                 display: none;
             }
@@ -316,7 +314,7 @@
                 margin-bottom: 8px;
             }
             
-            /* TRANSFORMS CARDS TO PORTRAIT ONLY ON MOBILE (2:3 Aspect Ratio) */
+            /* TRANSFORMS CARDS TO PORTRAIT ONLY ON MOBILE */
             .tile {
                 min-width: 115px;
                 width: 115px;
@@ -333,7 +331,6 @@
                 background: linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.4) 60%, transparent 100%);
             }
 
-            /* Make Badges visible on mobile layouts */
             .badge {
                 display: block;
                 position: absolute;
@@ -380,17 +377,17 @@
     <header id="mainHeader">
         <div class="nav-left">
             <div class="logo-container">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 150" width="100%" height="100%">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 680 145" width="100%" height="100%">
                     <g fill="#E50914">
-                        <path d="M40 5h24v50l38-50h26L86 60l45 68h-26L64 75v53H40V5z"/>
-                        <path d="M146 5h58v22h-34v28h30v21h-30v30h36v22h-60V5z"/>
-                        <path d="M220 5h28l22 65 22-65h26v123h-22V45l-21 61h-12l-21-61v83h-22V5z"/>
-                        <path d="M332 5h54v22h-30v30h28v21h-28v50h-24V5z"/>
-                        <path d="M402 5h24v101h34v22h-58V5z"/>
-                        <path d="M474 5h24v123h-24V5z"/>
-                        <path d="M512 5h26l27 56 27-56h25l-39 72 40 51h-27l-29-41-29 41h-26l39-51-39-72z"/>
+                        <path d="M10,12 L32,12 L32,60 L70,12 L96,12 L53,66 L100,133 L73,133 L32,76 L32,133 L10,133 Z" />
+                        <path d="M112,12 L172,12 L172,33 L137,33 L137,59 L168,59 L168,80 L137,80 L137,112 L174,112 L174,133 L112,133 Z" />
+                        <path d="M187,12 L213,12 L234,68 L256,12 L282,12 L282,133 L259,133 L259,48 L238,103 L230,103 L209,48 L209,133 L187,133 Z" />
+                        <path d="M296,12 L350,12 L350,33 L321,33 L321,59 L347,59 L347,80 L321,80 L321,133 L296,133 Z" />
+                        <path d="M363,12 L386,12 L386,112 L418,112 L418,133 L363,133 Z" />
+                        <path d="M433,12 L454,12 L454,133 L433,133 Z" />
+                        <path d="M471,12 L497,12 L524,64 L550,12 L576,12 L537,79 L579,133 L553,133 L524,90 L495,133 L469,133 L510,79 Z" />
                     </g>
-                    <path d="M 0 150 Q 300 116 600 150 Z" fill="#111111"/>
+                    <path d="M-50,133 Q265,110 580,133 L580,160 L-50,160 Z" fill="#111111" />
                 </svg>
             </div>
             <ul class="nav-menu">
@@ -509,7 +506,6 @@
         const player = document.getElementById('mainPlayer');
         const header = document.getElementById('mainHeader');
 
-        // Smooth background change script simulating real streaming service dark states when scrolling down
         window.addEventListener('scroll', () => {
             if (window.scrollY > 20) {
                 header.style.backgroundColor = '#111111';
