@@ -378,10 +378,25 @@
                 background: #e50914; color: #fff; font-size: 0.5rem; font-weight: 900;
                 padding: 2px 4px; border-radius: 3px; text-transform: uppercase; z-index: 2;
             }
+            .modal-content.video-layout { 
+                width: 95% !important; 
+                max-width: 100% !important;
+                aspect-ratio: 16/9;
+                background: transparent !important; 
+                box-shadow: none !important;
+            }
+            .modal-content.image-layout { 
+                height: 75vh; 
+                width: auto; 
+                background: transparent; 
+            }
+            .close-modal { 
+                top: -45px; 
+                right: 0px; 
+                font-size: 2.5rem; 
+                color: rgba(255, 255, 255, 0.8);
+            }
             
-            .modal-content.video-layout { width: 95%; height: auto; }
-            .modal-content.image-layout { height: 70vh; width: 85vw; }
-            .close-modal { top: -40px; right: 5px; font-size: 2.2rem; }
         }
     </style>
 </head>
