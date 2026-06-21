@@ -339,6 +339,7 @@
             background: none;
             border: none;
         }
+        
         /* =========================================================
            MOBILE SMARTPHONE RULES
            ========================================================= */
@@ -349,14 +350,33 @@
             .nav-right { gap: 15px; }
             .profile-avatar { width: 28px; height: 28px; }
             
-            .billboard { height: 55vh; padding: 0 5% 20px 5%; background-image: none; }
-            .billboard-overlay {
-                background: linear-gradient(to top, #111 20%, rgba(17,17,17,0.4) 70%, rgba(17,17,17,0.1) 100%);
+            /* --- HYBRID MOBILE BILLBOARD OVERRIDES --- */
+            .billboard-video-bg { display: none; } /* Hide the video on phones */
+            .billboard-overlay { display: none; }
+            
+            .billboard { 
+                height: 75vh; 
+                flex-direction: column;
+                justify-content: flex-end; 
+                padding: 0 5% 25px 5%; 
+                background-image: 
+                    linear-gradient(to top, #111 25%, rgba(17, 17, 17, 0.2) 50%, rgba(17,17,17,0) 100%),
+                    url('Mowni and Kevin.jpeg');
+                background-position: 62% 20%; 
+                background-size: 160%; 
             }
             .billboard-content { max-width: 100%; text-align: center; }
-            .billboard h1 { font-size: 2.2rem; margin-bottom: 6px; }
-            .billboard p { font-size: 0.95rem; margin-bottom: 15px; }
-            .btn { display: none; } /* Video loops implicitly on mobile canvas background automatically */
+            .billboard h1 { font-size: 2.2rem; margin-bottom: 8px; }
+            .billboard p { font-size: 0.95rem; margin-bottom: 20px; }
+            
+            /* Bring the button back for mobile users to trigger the video WITH sound */
+            .btn { 
+                display: inline-flex !important; 
+                width: 100%; 
+                justify-content: center; 
+                padding: 10px 24px; 
+                font-size: 1rem; 
+            }
             
             .row { padding: 15px 0 15px 4%; }
             .row h2 { font-size: 1.15rem; }
@@ -427,7 +447,6 @@
                         <path d="M433,12 L454,12 L454,133 L433,133 Z" />
                         <path d="M471,12 L497,12 L524,64 L550,12 L576,12 L537,79 L579,133 L553,133 L524,90 L495,133 L469,133 L510,79 Z" />
                     </g>
-                    <path d="M-50,133 Q265,110 580,133 L580,160 L-50,160 Z" fill="#111111" />
                 </svg>
             </div>
             <ul class="nav-menu">
@@ -460,7 +479,7 @@
         <div class="billboard-content">
             <h1>The Perfect Match</h1>
             <p>A beautiful journey of love, laughter, and happily ever after. Streaming exclusively in our hearts.</p>
-            <button class="btn" onclick="openVideoPlayer('https://files.catbox.moe/d9jmrm.mp4')"><span>►</span> Expand View</button>
+            <button class="btn" onclick="openVideoPlayer('https://files.catbox.moe/d9jmrm.mp4')"><span>►</span> Play Trailer</button>
         </div>
     </section>
 
