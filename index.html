@@ -328,7 +328,8 @@
         }
         
         /* SPECIFIC FIX: PORTRAIT POSTER SIZING FOR ROW 1 ONLY */
-        #row1-inner .tile {
+/* SPECIFIC FIX: PORTRAIT POSTER SIZING FOR ROWS 1 & 2 */
+        #row1-inner .tile, #row2-inner .tile {
             min-width: 180px;
             width: 180px;
             height: 270px;
@@ -356,7 +357,10 @@
         }
 
         .badge, .top10-badge { display: none; }
-
+/* OVERRIDE TO CENTER ROW 2 IMAGES AND SAVE BOTTOM TEXT */
+        #row2-inner .tile img {
+            object-position: bottom center;
+        }
         /* MULTI-MODAL DISPLAY SYSTEM */
         .modal {
             display: none;
@@ -481,7 +485,7 @@
                 border-radius: 4px;
             }
             /* Row 1 Portrait Mobile Overrides */
-            #row1-inner .tile { min-width: 125px; width: 125px; height: 185px; }
+            #row1-inner .tile, #row2-inner .tile { min-width: 125px; width: 125px; height: 185px; }
             
             .tile:hover { transform: scale(1.08); }
             .tile-title {
@@ -667,17 +671,21 @@
 
     <section class="row" id="row2">
         <div class="row-header">
-            <h2>Binge-worthy TV Mysteries</h2>
+            <h2>KEMFLIX Exclusives</h2>
             <ul class="slider-progress" id="progress2"></ul>
         </div>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollRow('row2-inner', -1)">&lt;</button>
             <div class="row-inner" id="row2-inner">
-                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="posters/16.jpg"><div class="tile-title">The Midnight Snack Raid</div></div>
-                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="posters/17.jpg"><div class="tile-title">Expert Level Overthinking</div></div>
-                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="posters/18.jpg"><div class="tile-title">Who Finished the Ice Cream?</div></div>
-                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="posters/19.jpg"><div class="tile-title">Batch 2: Title 4</div></div>
-                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="posters/20.jpg"><div class="tile-title">Batch 2: Title 5</div></div>
+                
+                <div class="tile" onclick="openVideoPlayer('https://files.catbox.moe/ob3oeu.mp4')">
+                    <img src="row2videos/KEMistry poster.png" alt="KEMistry">
+                </div>
+
+                <div class="tile" onclick="openVideoPlayer('https://files.catbox.moe/0p6ks5.mp4')">
+                    <img src="row2videos/Marakuma Nenjam poster.png" alt="Marakuma Nenjam">
+                </div>
+
             </div>
             <button class="slider-arrow right" onclick="scrollRow('row2-inner', 1)">&gt;</button>
         </div>
