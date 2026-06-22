@@ -118,7 +118,6 @@
             background-color: #000;
         }
         
-        /* Direct background video stream layer */
         .billboard-video-bg {
             position: absolute;
             top: 50%;
@@ -130,49 +129,103 @@
             z-index: 1;
         }
 
-        /* Cinematic deep dark gradient shading mask overlays */
         .billboard-overlay {
             position: absolute;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(to right, #111 25%, rgba(17, 17, 17, 0.3) 60%, rgba(17, 17, 17, 0) 100%),
-                        linear-gradient(to top, #111 0%, rgba(17,17,17,0) 15%);
+            background: linear-gradient(to right, #111 20%, rgba(17, 17, 17, 0.4) 50%, rgba(17, 17, 17, 0) 100%),
+                        linear-gradient(to top, #111 0%, rgba(17,17,17,0) 20%);
             z-index: 2;
         }
         
+        /* Netflix-Optimized Content Sizing */
         .billboard-content {
-            max-width: 550px;
+            max-width: 450px;
             z-index: 3;
             position: relative;
+            margin-top: 15vh;
         }
         .billboard h1 {
-            font-size: 3.8rem;
+            font-size: 2.8rem;
             margin-bottom: 12px;
-            text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
-            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+            font-weight: 800;
+            line-height: 1.1;
         }
         .billboard p {
-            font-size: 1.25rem;
+            font-size: 1.1rem;
             line-height: 1.4;
             margin-bottom: 25px;
-            text-shadow: 1px 1px 4px rgba(0,0,0,0.9);
-            color: #e5e5e5;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.8);
+            color: #fff;
+            font-weight: 500;
         }
+
+        .billboard-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        
         .btn {
-            padding: 12px 28px;
-            background-color: #fff;
-            color: #000;
-            border: none;
+            padding: 8px 24px;
+            border-radius: 4px;
             font-size: 1.15rem;
             font-weight: bold;
-            border-radius: 4px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            transition: background 0.2s;
+            transition: all 0.2s;
+            border: none;
         }
-        .btn:hover {
-            background-color: rgba(255,255,255,0.75);
+        .btn svg {
+            width: 24px;
+            height: 24px;
+            fill: currentColor;
+        }
+        .play-btn {
+            background-color: #fff;
+            color: #000;
+        }
+        .play-btn:hover { background-color: rgba(255,255,255,0.75); }
+
+        /* Mute Button & Maturity Rating Display */
+        .billboard-controls {
+            position: absolute;
+            right: 0;
+            bottom: 30%;
+            z-index: 3;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .mute-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid rgba(255,255,255,0.6);
+            background: rgba(0,0,0,0.1);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .mute-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+        .mute-btn:hover { background: rgba(255,255,255,0.2); }
+        
+        .maturity-rating {
+            background: rgba(51,51,51,0.6);
+            border-left: 3px solid #d9d9d9;
+            padding: 4px 35px 4px 10px;
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
         }
 
         /* DYNAMIC CAROUSEL SLIDER ENGINE STYLING */
@@ -351,8 +404,9 @@
             .profile-avatar { width: 28px; height: 28px; }
             
             /* --- HYBRID MOBILE BILLBOARD OVERRIDES --- */
-            .billboard-video-bg { display: none; } /* Hide the video on phones */
+            .billboard-video-bg { display: none; } 
             .billboard-overlay { display: none; }
+            .billboard-controls { display: none !important; } /* Hide mute UI on mobile */
             
             .billboard { 
                 height: 75vh; 
@@ -365,13 +419,17 @@
                 background-position: 62% 20%; 
                 background-size: 160%; 
             }
-            .billboard-content { max-width: 100%; text-align: center; }
+            .billboard-content { max-width: 100%; text-align: center; margin-top: 0; }
             .billboard h1 { font-size: 2.2rem; margin-bottom: 8px; }
             .billboard p { font-size: 0.95rem; margin-bottom: 20px; }
             
-            /* Bring the button back for mobile users to trigger the video WITH sound */
+            .billboard-buttons {
+                flex-direction: column;
+                width: 100%;
+                gap: 10px;
+            }
             .btn { 
-                display: inline-flex !important; 
+                display: flex !important; 
                 width: 100%; 
                 justify-content: center; 
                 padding: 10px 24px; 
@@ -472,14 +530,29 @@
     </header>
 
     <section class="billboard">
-        <video class="billboard-video-bg" autoplay loop muted playsinline>
+        <video class="billboard-video-bg" id="bgVideo" autoplay loop muted playsinline>
             <source src="https://files.catbox.moe/d9jmrm.mp4" type="video/mp4">
         </video>
         <div class="billboard-overlay"></div>
+        
         <div class="billboard-content">
             <h1>The Perfect Match</h1>
             <p>A beautiful journey of love, laughter, and happily ever after. Streaming exclusively in our hearts.</p>
-            <button class="btn" onclick="openVideoPlayer('https://files.catbox.moe/d9jmrm.mp4')"><span>►</span> Play Trailer</button>
+            
+            <div class="billboard-buttons">
+                <button class="btn play-btn" onclick="openVideoPlayer('https://files.catbox.moe/d9jmrm.mp4')">
+                    <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg> Play Trailer
+                </button>
+            </div>
+        </div>
+
+        <div class="billboard-controls">
+            <button class="mute-btn" onclick="toggleMute()">
+                <svg id="muteIcon" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>
+                </svg>
+            </button>
+            <div class="maturity-rating">TV-14</div>
         </div>
     </section>
 
@@ -492,53 +565,93 @@
             <button class="slider-arrow left" onclick="scrollRow('row1-inner', -1)">&lt;</button>
             <div class="row-inner" id="row1-inner">
                 
-                <div class="tile" onclick="openImagePopup('posters/1.jpg')">
-                    <img src="posters/1.jpg" alt="Poster 1">
-                    <span class="badge">New Season</span>
-                    <div class="tile-title">Where Are My Keys?</div>
-                </div>
-
-                <div class="tile" onclick="openImagePopup('posters/4.jpg')">
-                    <img src="posters/4.jpg" alt="Poster 2">
-                    <div class="tile-title">When Kevin Is 5 Mins Late</div>
-                </div>
-
-                <div class="tile" onclick="openImagePopup('posters/10.jpg')">
-                    <img src="posters/10.jpg" alt="Poster 3">
-                    <div class="tile-title">The Diet Starts Tomorrow</div>
-                </div>
-
-                <div class="tile" onclick="openImagePopup('posters/11.jpg')">
-                    <img src="posters/11.jpg" alt="Poster 4">
-                    <div class="tile-title">The Sangeet Meltdown</div>
-                </div>
-
-                <div class="tile" onclick="openImagePopup('posters/12.jpg')">
-                    <img src="posters/12.jpg" alt="Poster 5">
-                    <div class="tile-title">The Midnight Snack Raid</div>
-                </div>
-
-                <div class="tile" onclick="openImagePopup('posters/13.jpg')">
-                    <img src="posters/13.jpg" alt="Poster 6">
-                    <div class="tile-title">Expert Level Overthinking</div>
-                </div>
-
-                <div class="tile" onclick="openImagePopup('posters/14.jpg')">
-                    <img src="posters/14.jpg" alt="Poster 7">
-                    <div class="tile-title">The Lamborghini Hijack</div>
-                </div>
-
-                <div class="tile" onclick="openImagePopup('posters/15.jpg')">
-                    <img src="posters/15.jpg" alt="Poster 8">
+                <div class="tile" onclick="openImagePopup('row1posters/Cyberpunk.jpg')">
+                    <img src="row1posters/Cyberpunk.jpg" alt="Cyberpunk">
                     <span class="badge">Trending</span>
-                    <div class="tile-title">Parallel Parking Survival</div>
+                    <div class="tile-title">Cyberpunk</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/Deiva Thirumagal.png')">
+                    <img src="row1posters/Deiva Thirumagal.png" alt="Deiva Thirumagal">
+                    <div class="tile-title">Deiva Thirumagal</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/En Thangai.png')">
+                    <img src="row1posters/En Thangai.png" alt="En Thangai">
+                    <div class="tile-title">En Thangai</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/Fast and Furious.png')">
+                    <img src="row1posters/Fast and Furious.png" alt="Fast and Furious">
+                    <div class="tile-title">Fast and Furious</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/Friends.png')">
+                    <img src="row1posters/Friends.png" alt="Friends">
+                    <span class="badge">New Season</span>
+                    <div class="tile-title">Friends</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/Gifted.png')">
+                    <img src="row1posters/Gifted.png" alt="Gifted">
+                    <div class="tile-title">Gifted</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/How I met Kevin.png')">
+                    <img src="row1posters/How I met Kevin.png" alt="How I met Kevin">
+                    <div class="tile-title">How I met Kevin</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/Kannathil Muthamittal.png')">
+                    <img src="row1posters/Kannathil Muthamittal.png" alt="Kannathil Muthamittal">
+                    <div class="tile-title">Kannathil Muthamittal</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/Kemington.jpeg')">
+                    <img src="row1posters/Kemington.jpeg" alt="Kemington">
+                    <div class="tile-title">Kemington</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/Mowni in Canada.png')">
+                    <img src="row1posters/Mowni in Canada.png" alt="Mowni in Canada">
+                    <div class="tile-title">Mowni in Canada</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/Mowniyum Naanum.png')">
+                    <img src="row1posters/Mowniyum Naanum.png" alt="Mowniyum Naanum">
+                    <div class="tile-title">Mowniyum Naanum</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/Nizharkudai.jpg')">
+                    <img src="row1posters/Nizharkudai.jpg" alt="Nizharkudai">
+                    <div class="tile-title">Nizharkudai</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/Sillinu Oru Kadhal.png')">
+                    <img src="row1posters/Sillinu Oru Kadhal.png" alt="Sillinu Oru Kadhal">
+                    <div class="tile-title">Sillinu Oru Kadhal</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/The Crown.png')">
+                    <img src="row1posters/The Crown.png" alt="The Crown">
+                    <div class="tile-title">The Crown</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/The Proposal.png')">
+                    <img src="row1posters/The Proposal.png" alt="The Proposal">
+                    <div class="tile-title">The Proposal</div>
+                </div>
+
+                <div class="tile" onclick="openImagePopup('row1posters/Wed-Day.png')">
+                    <img src="row1posters/Wed-Day.png" alt="Wed-Day">
+                    <div class="tile-title">Wed-Day</div>
                 </div>
 
             </div>
             <button class="slider-arrow right" onclick="scrollRow('row1-inner', 1)">&gt;</button>
         </div>
     </section>
-
+    
     <section class="row" id="row2">
         <div class="row-header">
             <h2>Binge-worthy TV Mysteries</h2>
@@ -589,6 +702,20 @@
         const videoElement = document.getElementById('modalVideoComponent');
         const imageElement = document.getElementById('modalImageComponent');
         const header = document.getElementById('mainHeader');
+        
+        // Mute Toggle Logic
+        const bgVideo = document.getElementById('bgVideo');
+        const muteIcon = document.getElementById('muteIcon');
+
+        function toggleMute() {
+            if (bgVideo.muted) {
+                bgVideo.muted = false;
+                muteIcon.innerHTML = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+            } else {
+                bgVideo.muted = true;
+                muteIcon.innerHTML = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
+            }
+        }
 
         window.addEventListener('scroll', () => {
             if (window.scrollY > 20) {
@@ -635,11 +762,9 @@
 
         // ROW 1 PIPELINE: IMAGE POSTER LIGHTBOX VIEW
         function openImagePopup(imagePath) {
-            // Clean older states
             videoElement.style.display = "none";
             videoElement.src = "";
             
-            // Format layout window for portrait posters
             modalContent.className = "modal-content image-layout";
             imageElement.src = imagePath;
             imageElement.style.display = "block";
@@ -648,11 +773,9 @@
 
         // ROW 2 & 3 PIPELINE: STREAMING VIDEO SECTIONS
         function openVideoPlayer(videoUrl) {
-            // Clean older states
             imageElement.style.display = "none";
             imageElement.src = "";
             
-            // Format layout window for landscape wide streaming formats
             modalContent.className = "modal-content video-layout";
             videoElement.src = videoUrl;
             videoElement.style.display = "block";
