@@ -137,7 +137,6 @@
             z-index: 2;
         }
         
-        /* Netflix-Optimized Content Sizing */
         .billboard-content {
             max-width: 450px;
             z-index: 3;
@@ -188,7 +187,6 @@
         }
         .play-btn:hover { background-color: rgba(255,255,255,0.75); }
 
-        /* Mute Button & Maturity Rating Display */
         .billboard-controls {
             position: absolute;
             right: 0;
@@ -315,7 +313,7 @@
             font-size: 2.8rem;
         }
 
-        /* DESKTOP DEFAULT: Widescreen Horizontal Cards */
+        /* TILE DIMENSIONS */
         .tile {
             min-width: 280px;
             width: 280px;
@@ -328,6 +326,14 @@
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
             flex-shrink: 0;
         }
+        
+        /* SPECIFIC FIX: PORTRAIT POSTER SIZING FOR ROW 1 ONLY */
+        #row1-inner .tile {
+            min-width: 180px;
+            width: 180px;
+            height: 270px;
+        }
+
         .tile:hover {
             transform: scale(1.12);
             z-index: 5;
@@ -336,6 +342,7 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+            object-position: top center; /* Prevents heads from getting cut off */
         }
         .tile-title {
             position: absolute;
@@ -367,13 +374,11 @@
             border-radius: 6px;
             overflow: hidden;
         }
-        /* Sizing structure for the Video Frame Modal */
         .modal-content.video-layout {
             width: 85%;
             max-width: 900px;
             aspect-ratio: 16/9;
         }
-        /* Sizing structure for the Image Poster Modal */
         .modal-content.image-layout {
             height: 85vh;
             width: auto;
@@ -382,16 +387,46 @@
         .modal video { width: 100%; height: 100%; }
         .modal img { height: 100%; width: auto; object-fit: contain; }
         
-        .close-modal {
+        /* Modal Gallery Navigation */
+        .modal-nav {
             position: absolute;
-            top: -45px;
-            right: 0;
-            color: #fff;
-            font-size: 2.5rem;
-            cursor: pointer;
-            background: none;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.6);
+            color: white;
             border: none;
+            font-size: 2.5rem;
+            padding: 10px 15px;
+            cursor: pointer;
+            z-index: 501;
+            border-radius: 4px;
+            display: none;
+            transition: background 0.2s;
         }
+        .modal-nav:hover { background: rgba(0,0,0,0.9); }
+        .modal-nav.left { left: 3%; }
+        .modal-nav.right { right: 3%; }
+        
+        /* Locked 'X' Close Button */
+        .close-modal {
+            position: fixed;
+            top: 25px;
+            right: 35px;
+            color: #fff;
+            font-size: 3rem;
+            cursor: pointer;
+            background: rgba(0,0,0,0.5);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 502;
+            transition: background 0.2s;
+        }
+        .close-modal:hover { background: rgba(0,0,0,0.8); }
         
         /* =========================================================
            MOBILE SMARTPHONE RULES
@@ -403,10 +438,9 @@
             .nav-right { gap: 15px; }
             .profile-avatar { width: 28px; height: 28px; }
             
-            /* --- HYBRID MOBILE BILLBOARD OVERRIDES --- */
             .billboard-video-bg { display: none; } 
             .billboard-overlay { display: none; }
-            .billboard-controls { display: none !important; } /* Hide mute UI on mobile */
+            .billboard-controls { display: none !important; } 
             
             .billboard { 
                 height: 75vh; 
@@ -446,6 +480,9 @@
                 height: 165px;
                 border-radius: 4px;
             }
+            /* Row 1 Portrait Mobile Overrides */
+            #row1-inner .tile { min-width: 125px; width: 125px; height: 185px; }
+            
             .tile:hover { transform: scale(1.08); }
             .tile-title {
                 font-size: 0.75rem;
@@ -459,13 +496,7 @@
                 background-color: #e50914; color: white; padding: 1px 4px; font-size: 0.5rem;
                 font-weight: bold; border-radius: 2px; text-transform: uppercase; z-index: 2;
             }
-            .top10-badge {
-                display: block; position: absolute; top: 5px; right: 5px;
-                background: #e50914; color: #fff; font-size: 0.5rem; font-weight: 900;
-                padding: 2px 4px; border-radius: 3px; text-transform: uppercase; z-index: 2;
-            }
             
-            /* FORCED EDGE-TO-EDGE WIDESCREEN SMARTPHONE DISPLAY OVERRIDES */
             .modal-content.video-layout { 
                 width: 95vw !important; 
                 height: auto !important;
@@ -480,12 +511,10 @@
                 width: auto !important; 
                 background: transparent !important; 
             }
-            .close-modal { 
-                top: -45px !important; 
-                right: 5px !important; 
-                font-size: 2.5rem !important; 
-                color: #fff !important;
-            }
+            .modal-nav { padding: 5px 10px; font-size: 1.5rem; }
+            .modal-nav.left { left: 1%; }
+            .modal-nav.right { right: 1%; }
+            .close-modal { top: 15px !important; right: 15px !important; width: 40px; height: 40px; font-size: 2rem !important; }
         }
  
     </style>
@@ -558,100 +587,84 @@
 
     <section class="row" id="row1">
         <div class="row-header">
-            <h2>Suspenseful TV Shows</h2>
+            <h2>KEMistry Originals</h2>
             <ul class="slider-progress" id="progress1"></ul>
         </div>
         <div class="slider-wrapper">
             <button class="slider-arrow left" onclick="scrollRow('row1-inner', -1)">&lt;</button>
             <div class="row-inner" id="row1-inner">
                 
-                <div class="tile" onclick="openImagePopup('row1posters/Cyberpunk.jpg')">
+                <div class="tile" onclick="openImagePopup(0)">
                     <img src="row1posters/Cyberpunk.jpg" alt="Cyberpunk">
                     <span class="badge">Trending</span>
-                    <div class="tile-title">Cyberpunk</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/Deiva Thirumagal.png')">
+                <div class="tile" onclick="openImagePopup(1)">
                     <img src="row1posters/Deiva Thirumagal.png" alt="Deiva Thirumagal">
-                    <div class="tile-title">Deiva Thirumagal</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/En Thangai.png')">
+                <div class="tile" onclick="openImagePopup(2)">
                     <img src="row1posters/En Thangai.png" alt="En Thangai">
-                    <div class="tile-title">En Thangai</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/Fast and Furious.png')">
+                <div class="tile" onclick="openImagePopup(3)">
                     <img src="row1posters/Fast and Furious.png" alt="Fast and Furious">
-                    <div class="tile-title">Fast and Furious</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/Friends.png')">
+                <div class="tile" onclick="openImagePopup(4)">
                     <img src="row1posters/Friends.png" alt="Friends">
                     <span class="badge">New Season</span>
-                    <div class="tile-title">Friends</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/Gifted.png')">
+                <div class="tile" onclick="openImagePopup(5)">
                     <img src="row1posters/Gifted.png" alt="Gifted">
-                    <div class="tile-title">Gifted</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/How I met Kevin.png')">
+                <div class="tile" onclick="openImagePopup(6)">
                     <img src="row1posters/How I met Kevin.png" alt="How I met Kevin">
-                    <div class="tile-title">How I met Kevin</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/Kannathil Muthamittal.png')">
+                <div class="tile" onclick="openImagePopup(7)">
                     <img src="row1posters/Kannathil Muthamittal.png" alt="Kannathil Muthamittal">
-                    <div class="tile-title">Kannathil Muthamittal</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/Kemington.jpeg')">
+                <div class="tile" onclick="openImagePopup(8)">
                     <img src="row1posters/Kemington.jpeg" alt="Kemington">
-                    <div class="tile-title">Kemington</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/Mowni in Canada.png')">
+                <div class="tile" onclick="openImagePopup(9)">
                     <img src="row1posters/Mowni in Canada.png" alt="Mowni in Canada">
-                    <div class="tile-title">Mowni in Canada</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/Mowniyum Naanum.png')">
+                <div class="tile" onclick="openImagePopup(10)">
                     <img src="row1posters/Mowniyum Naanum.png" alt="Mowniyum Naanum">
-                    <div class="tile-title">Mowniyum Naanum</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/Nizharkudai.jpg')">
+                <div class="tile" onclick="openImagePopup(11)">
                     <img src="row1posters/Nizharkudai.jpg" alt="Nizharkudai">
-                    <div class="tile-title">Nizharkudai</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/Sillinu Oru Kadhal.png')">
+                <div class="tile" onclick="openImagePopup(12)">
                     <img src="row1posters/Sillinu Oru Kadhal.png" alt="Sillinu Oru Kadhal">
-                    <div class="tile-title">Sillinu Oru Kadhal</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/The Crown.png')">
+                <div class="tile" onclick="openImagePopup(13)">
                     <img src="row1posters/The Crown.png" alt="The Crown">
-                    <div class="tile-title">The Crown</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/The Proposal.png')">
+                <div class="tile" onclick="openImagePopup(14)">
                     <img src="row1posters/The Proposal.png" alt="The Proposal">
-                    <div class="tile-title">The Proposal</div>
                 </div>
 
-                <div class="tile" onclick="openImagePopup('row1posters/Wed-Day.png')">
+                <div class="tile" onclick="openImagePopup(15)">
                     <img src="row1posters/Wed-Day.png" alt="Wed-Day">
-                    <div class="tile-title">Wed-Day</div>
                 </div>
 
             </div>
             <button class="slider-arrow right" onclick="scrollRow('row1-inner', 1)">&gt;</button>
         </div>
     </section>
-    
+
     <section class="row" id="row2">
         <div class="row-header">
             <h2>Binge-worthy TV Mysteries</h2>
@@ -689,11 +702,13 @@
     </section>
 
     <div class="modal" id="globalModal">
+        <button class="modal-nav left" id="modalPrev" onclick="changeModalImage(-1)">&#10094;</button>
         <div class="modal-content" id="modalContentWindow">
             <button class="close-modal" onclick="closeGlobalModal()">&times;</button>
             <video id="modalVideoComponent" controls autoplay playsinline style="display: none;"></video>
             <img id="modalImageComponent" src="" alt="Poster View" style="display: none;">
         </div>
+        <button class="modal-nav right" id="modalNext" onclick="changeModalImage(1)">&#10095;</button>
     </div>
 
     <script>
@@ -718,11 +733,8 @@
         }
 
         window.addEventListener('scroll', () => {
-            if (window.scrollY > 20) {
-                header.style.backgroundColor = '#111111';
-            } else {
-                header.style.backgroundColor = 'transparent';
-            }
+            if (window.scrollY > 20) { header.style.backgroundColor = '#111111'; } 
+            else { header.style.backgroundColor = 'transparent'; }
         });
 
         function scrollRow(rowId, direction) {
@@ -760,21 +772,44 @@
             });
         });
 
-        // ROW 1 PIPELINE: IMAGE POSTER LIGHTBOX VIEW
-        function openImagePopup(imagePath) {
+        // ROW 1 PIPELINE: DYNAMIC IMAGE GALLERY ARRAY
+        const row1Posters = [
+            'row1posters/Cyberpunk.jpg', 'row1posters/Deiva Thirumagal.png', 'row1posters/En Thangai.png',
+            'row1posters/Fast and Furious.png', 'row1posters/Friends.png', 'row1posters/Gifted.png',
+            'row1posters/How I met Kevin.png', 'row1posters/Kannathil Muthamittal.png', 'row1posters/Kemington.jpeg',
+            'row1posters/Mowni in Canada.png', 'row1posters/Mowniyum Naanum.png', 'row1posters/Nizharkudai.jpg',
+            'row1posters/Sillinu Oru Kadhal.png', 'row1posters/The Crown.png', 'row1posters/The Proposal.png',
+            'row1posters/Wed-Day.png'
+        ];
+        let currentGalleryIndex = 0;
+
+        function openImagePopup(index) {
+            currentGalleryIndex = index;
             videoElement.style.display = "none";
             videoElement.src = "";
+            document.getElementById('modalPrev').style.display = 'block';
+            document.getElementById('modalNext').style.display = 'block';
             
             modalContent.className = "modal-content image-layout";
-            imageElement.src = imagePath;
+            imageElement.src = row1Posters[currentGalleryIndex];
             imageElement.style.display = "block";
             modal.style.display = 'flex';
+        }
+
+        function changeModalImage(direction) {
+            event.stopPropagation(); // Prevents clicking the arrows from closing the modal window
+            currentGalleryIndex += direction;
+            if (currentGalleryIndex < 0) currentGalleryIndex = row1Posters.length - 1;
+            if (currentGalleryIndex >= row1Posters.length) currentGalleryIndex = 0;
+            imageElement.src = row1Posters[currentGalleryIndex];
         }
 
         // ROW 2 & 3 PIPELINE: STREAMING VIDEO SECTIONS
         function openVideoPlayer(videoUrl) {
             imageElement.style.display = "none";
             imageElement.src = "";
+            document.getElementById('modalPrev').style.display = 'none';
+            document.getElementById('modalNext').style.display = 'none';
             
             modalContent.className = "modal-content video-layout";
             videoElement.src = videoUrl;
