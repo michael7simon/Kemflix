@@ -606,7 +606,7 @@
 
     <section class="row" id="row1">
         <div class="row-header">
-            <h2>KEMistry Originals</h2>
+            <h2>Kemflix Originals</h2>
             <ul class="slider-progress" id="progress1"></ul>
         </div>
         <div class="slider-wrapper">
@@ -686,7 +686,7 @@
 
     <section class="row" id="row2">
         <div class="row-header">
-            <h2>KEMFLIX Exclusives</h2>
+            <h2>Kemflix Exclusives</h2>
             <ul class="slider-progress" id="progress2"></ul>
         </div>
         <div class="slider-wrapper">
@@ -723,24 +723,6 @@
 
             </div>
             <button class="slider-arrow right" onclick="scrollRow('row2-inner', 1)">&gt;</button>
-        </div>
-    </section>
-
-    <section class="row" id="row3">
-        <div class="row-header">
-            <h2>Critically Acclaimed Docuseries</h2>
-            <ul class="slider-progress" id="progress3"></ul>
-        </div>
-        <div class="slider-wrapper">
-            <button class="slider-arrow left" onclick="scrollRow('row3-inner', -1)">&lt;</button>
-            <div class="row-inner" id="row3-inner">
-                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="posters/21.jpg"><div class="tile-title">The Instagram Vs Reality Tale</div></div>
-                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="posters/22.jpg"><div class="tile-title">The Lamborghini Hijack</div></div>
-                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="posters/23.jpg"><div class="tile-title">Parallel Parking Survival</div></div>
-                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/movie.mp4')"><img src="posters/24.jpg"><div class="tile-title">Batch 2: Title 4</div></div>
-                <div class="tile" onclick="openVideoPlayer('https://www.w3schools.com/html/mov_bbb.mp4')"><img src="posters/25.jpg"><div class="tile-title">Batch 2: Title 5</div></div>
-            </div>
-            <button class="slider-arrow right" onclick="scrollRow('row3-inner', 1)">&gt;</button>
         </div>
     </section>
 
@@ -809,7 +791,7 @@
         }
 
         window.addEventListener('load', () => {
-            ['row1-inner', 'row2-inner', 'row3-inner'].forEach(id => {
+            ['row1-inner', 'row2-inner'].forEach(id => {
                 updateProgressLines(id);
                 document.getElementById(id).addEventListener('scroll', () => updateProgressLines(id));
             });
@@ -847,7 +829,7 @@
             imageElement.src = row1Posters[currentGalleryIndex];
         }
 
-        // ROW 2 & 3 PIPELINE: STREAMING VIDEO SECTIONS
+        // ROW 2 PIPELINE: STREAMING VIDEO SECTIONS
         function openVideoPlayer(videoUrl) {
             imageElement.style.display = "none";
             imageElement.src = "";
